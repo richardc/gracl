@@ -10,4 +10,8 @@ class Gracl::User
     def self.new_from_file(filename)
         self.new(File.basename(filename, '.pub'), filename)
     end
+    
+    def keys
+        File.open(keyfile).lines
+    end
 end
