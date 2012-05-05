@@ -22,9 +22,9 @@ require 'gracl/command'
 
 
 class Gracl
-    def initialize
+    def initialize(config = "gracl.conf")
         @config = Gracl::Config.instance
-        load "gracl.conf"
+        load config
     end
 
 end
