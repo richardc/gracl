@@ -1,7 +1,7 @@
 require 'yaml'
 require 'gracl/config'
-require 'gracl/config/repo'
-require 'gracl/config/repo/permission'
+require 'gracl/repo'
+require 'gracl/permission'
 
 
 class Gracl

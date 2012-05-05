@@ -1,13 +1,7 @@
 class Gracl
 end
 
-class Gracl::Config
-end
-
-class Gracl::Config::Repo
-end
-
-class Gracl::Config::Repo::Permission
+class Gracl::Permission
     attr_accessor :what
     attr_accessor :who
     

@@ -1,10 +1,7 @@
 class Gracl
 end
 
-class Gracl::Config
-end
-
-class Gracl::Config::Repo
+class Gracl::Repo
     attr_accessor :name
     attr_accessor :description
     attr_accessor :section
@@ -25,11 +22,11 @@ class Gracl::Config::Repo
     end
 
     def readers(*readers)
-        self.acls << Gracl::Config::Repo::Permission.new(:read, readers)
+        self.acls << Gracl::Permission.new(:read, readers)
     end
 
     def writers(*writers)
-        self.acls << Gracl::Config::Repo::Permission.new(:write, writers)
+        self.acls << Gracl::Permission.new(:write, writers)
     end
 
     def group
@@ -37,10 +34,10 @@ class Gracl::Config::Repo
     end
 
     def allow_branch(refspec, *who)
-        self.acls << Gracl::Config::Repo::Permission.new(:ref, refspec, who)
+        self.acls << Gracl::Permission.new(:ref, refspec, who)
     end
 
     def allow_path(pathspec, *who)
-        self.acls << Gracl::Config::Repo::Permission.new(:path, pathspec, who)
+        self.acls << Gracl::Permission.new(:path, pathspec, who)
     end
 end

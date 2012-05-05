@@ -12,6 +12,6 @@ class Gracl::Config
     end
 
     def repository(name, &block)
-        @repos << Gracl::Config::Repo.new(name, &block)
+        @repos << Gracl::Repo.new(name, &block)
     end
 end
