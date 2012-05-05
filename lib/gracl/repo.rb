@@ -29,10 +29,6 @@ class Gracl::Repo
         self.acls << Gracl::Permission.new(:write, writers)
     end
 
-    def group
-        { :pies => 1 }
-    end
-
     def allow_branch(refspec, *who)
         self.acls << Gracl::Permission.new(:ref, refspec, who)
     end
