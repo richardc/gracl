@@ -8,7 +8,7 @@ require 'gracl/permission'
 
 class Gracl
     def initialize
-        @config = Gracl::Config.new
+        @config = Gracl::Config.instance
         load "gracl.conf"
     end
 
