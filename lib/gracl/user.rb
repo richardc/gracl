@@ -1,6 +1,3 @@
-class Gracl
-end
-
 class Gracl::User
     attr_accessor :name
     attr_accessor :keyfile

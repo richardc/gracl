@@ -1,4 +1,3 @@
 #!/usr/bin/env ruby
 require 'gracl'
-
-Gracl.new.run(ARGV)
+Gracl::Command.run

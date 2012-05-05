@@ -1,6 +1,3 @@
-class Gracl
-end
-
 class Gracl::Permission
     attr_accessor :what
     attr_accessor :who

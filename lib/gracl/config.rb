@@ -1,7 +1,4 @@
 require 'singleton'
-class Gracl
-end
-
 class Gracl::Config
     include Singleton
     attr_accessor :repos, :users, :groups

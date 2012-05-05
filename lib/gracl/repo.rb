@@ -1,6 +1,3 @@
-class Gracl
-end
-
 class Gracl::Repo
     attr_accessor :name
     attr_accessor :description
