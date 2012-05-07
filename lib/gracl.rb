@@ -73,7 +73,7 @@ class Gracl
 '''
 Gracl::Config.setup do
     repository "gracl-admin" do
-        writable    "admin"
+        writers   "admin"
     end
 end
 '''
