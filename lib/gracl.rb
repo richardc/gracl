@@ -25,24 +25,18 @@ require 'gracl/command'
 
 
 class Gracl
-    attr_accessor :config_file
-    def initialize(config = "gracl.conf")
-        self.config_file = config
-        @config = nil
+    attr_accessor :config_directory
+    def initialize(config_directory = ".")
+        self.config_directory = config_directory
     end
     
     def config
         return @config if @config
-        @config = Gracl::Config.instance
-        load config_file
+        @config = Gracl::Config.new(config_directory)
     end
 
     def binary
         Pathname.new( $0 ).realpath
-    end
-
-    # Validate the config
-    def validate
     end
 
     def install_hooks
@@ -77,5 +71,8 @@ Gracl::Config.setup do
     end
 end
 '''
+    end
+
+    def install_new_config
     end
 end

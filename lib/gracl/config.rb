@@ -1,16 +1,21 @@
-require 'singleton'
 class Gracl::Config
-    include Singleton
-    attr_accessor :repos, :users, :groups
-    def initialize
+    attr_accessor :repos, :users, :groups, :directory
+    def initialize(directory = ".")
+        self.directory = directory
         self.repos = []
         self.users = []
         self.groups = []
-        load_users
+
+        # used in Gracl::Config.setup
+        @@current = self
+        Dir.chdir(directory) do
+            load_users
+            load "gracl.conf"
+        end
     end
 
     def self.setup(&block)
-        self.instance.instance_eval &block
+        @@current.instance_eval &block
     end
 
     def load_users
@@ -25,5 +30,8 @@ class Gracl::Config
 
     def group(name, &block)
         groups << Gracl::Group.new(name, &block)
+    end
+
+    def validate
     end
 end
