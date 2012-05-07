@@ -56,11 +56,17 @@ class Gracl
     end
 
     def create_admin_repository(admin)
-        repo = Grit::Repo.init_bare(".gracl.git")
+        if File.directory? ".gracl"
+            raise "Already created admin repo, bailing"
+        end
+        repo = Grit::Repo.init(".gracl")
         index = repo.index
         index.add("gracl.conf", initial_config)
         index.add("keydir/admin/admin.pub", IO.read(admin))
         index.commit("Initial creation of gracl-admin")
+        Dir.chdir(".gracl") do
+            repo.git.reset({:hard => true}, "HEAD")
+        end
     end
     
     def initial_config
