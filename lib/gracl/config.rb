@@ -1,5 +1,5 @@
 class Gracl::Config
-    attr_accessor :repos, :users, :groups, :directory
+    attr_accessor :repos, :users, :groups, :directory, :repo_root
     def initialize(directory = ".")
         self.directory = directory
         self.repos = []
@@ -20,7 +20,7 @@ class Gracl::Config
 
     def load_users
         Dir["keydir/**/*.pub"].each do |keyfile|
-            users << Gracl::User.new_from_file( keyfile )
+            users << Gracl::User.new_from_file( File.expand_path(keyfile) )
         end
     end
 
@@ -34,5 +34,13 @@ class Gracl::Config
 
     def validate
         true
+    end
+
+    def user(name)
+        users.find { |u| u.name == name }
+    end
+
+    def repo(name)
+        repos.find { |r| r.name == name }
     end
 end

@@ -25,25 +25,21 @@ require 'gracl/command'
 
 
 class Gracl
-    attr_accessor :config_directory
-    def initialize(config_directory = ".")
-        self.config_directory = config_directory
+    attr_accessor :repositories
+    attr_accessor :admin_repo
+    def initialize
+        self.repositories = File.expand_path("~/repositories")
+        self.admin_repo = "#{self.repositories}/gracl-admin.git"
     end
-    
+
     def config
         return @config if @config
-        @config = Gracl::Config.new(config_directory)
-    end
-
-    def binary
-        Pathname.new( $0 ).realpath
-    end
-
-    def install_hooks
-        # in the gracl-admin repository, add in the post-commit hook
+        @config = Gracl::Config.new(admin_repo)
     end
 
     def install_ssh_config
+        binary = Pathname.new($0).realpath
+
         if !File.directory?(File.expand_path("~/.ssh"))
             Dir.mkdir(File.expand_path("~/.ssh"), 0755)
         end
@@ -56,32 +52,5 @@ class Gracl
                     %{no-X11-forwarding,no-agent-forwarding,no-pty #{key}}
             end
         end
-    end
-
-    def create_admin_repository(admin)
-        if File.directory? ".gracl"
-            raise "Already created admin repo, bailing"
-        end
-        repo = Grit::Repo.init(".gracl")
-        index = repo.index
-        index.add("gracl.conf", initial_config)
-        index.add("keydir/admin/admin.pub", IO.read(admin))
-        index.commit("Initial creation of gracl-admin")
-        Dir.chdir(".gracl") do
-            repo.git.reset({:hard => true}, "HEAD")
-        end
-    end
-    
-    def initial_config
-'''
-Gracl::Config.setup do
-    repository "gracl-admin" do
-        writers   "admin"
-    end
-end
-'''
-    end
-
-    def install_new_config
     end
 end
