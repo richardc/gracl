@@ -33,5 +33,6 @@ class Gracl::Config
     end
 
     def validate
+        true
     end
 end
