@@ -1,11 +1,9 @@
 class Gracl::Config::User
-    attr_accessor :config
     attr_accessor :name
     attr_accessor :keyfile
     attr_accessor :groups
 
     def initialize(name, keyfile)
-        self.config = Gracl::Config.current
         self.name = name
         self.keyfile = File.expand_path(keyfile)
         self.groups  = (keyfile.split /\//)[1..-2]

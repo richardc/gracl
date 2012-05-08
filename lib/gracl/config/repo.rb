@@ -1,12 +1,10 @@
 class Gracl::Config::Repo
-    attr_accessor :config
     attr_accessor :name
     attr_accessor :description
     attr_accessor :section
     attr_accessor :acls
 
     def initialize(name, &block)
-        self.config = Gracl::Config.current
         self.name = name
         self.acls = []
         instance_eval &block
