@@ -28,16 +28,16 @@ class Gracl::Config
 
     def load_users
         Dir["keydir/**/*.pub"].each do |keyfile|
-            users << Gracl::User.new_from_file(keyfile)
+            users << Gracl::Config::User.new_from_file(keyfile)
         end
     end
 
     def repository(name, &block)
-        repos << Gracl::Repo.new(name, &block)
+        repos << Gracl::Config::Repo.new(name, &block)
     end
 
     def group(name, &block)
-        groups << Gracl::Group.new(name, &block)
+        groups << Gracl::Config::Group.new(name, &block)
     end
 
     def validate

@@ -1,4 +1,4 @@
-class Gracl::Permission::Branch < Gracl::Permission
+class Gracl::Config::Permission::Branch < Gracl::Config::Permission
     attr_accessor :branch
 
     def initialize(who, branch)

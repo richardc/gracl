@@ -8,19 +8,21 @@ require 'grit'
 # 'class Gracl::Commmand::Foo' rather than doing the whole subclass
 # fiesta.  I hate you ruby.
 class Gracl
+    class Config
+    end
     class Command < Clamp::Command
     end
 end
 
+require 'gracl/config/repo'
+require 'gracl/config/user'
+require 'gracl/config/group'
+require 'gracl/config/permission'
+require 'gracl/config/permission/branch'
+require 'gracl/config/permission/path'
+require 'gracl/config/permission/read'
+require 'gracl/config/permission/write'
 require 'gracl/config'
-require 'gracl/repo'
-require 'gracl/user'
-require 'gracl/group'
-require 'gracl/permission'
-require 'gracl/permission/branch'
-require 'gracl/permission/path'
-require 'gracl/permission/read'
-require 'gracl/permission/write'
 require 'gracl/command/dump'
 require 'gracl/command/shell'
 require 'gracl/command/setup'

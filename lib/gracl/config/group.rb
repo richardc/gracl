@@ -1,4 +1,4 @@
-class Gracl::Group
+class Gracl::Config::Group
     attr_accessor :config
     attr_accessor :name
 

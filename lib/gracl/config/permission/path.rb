@@ -1,4 +1,4 @@
-class Gracl::Permission::Path < Gracl::Permission
+class Gracl::Config::Permission::Path < Gracl::Config::Permission
     attr_accessor :path
 
     def initialize(who, path)

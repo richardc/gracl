@@ -1,4 +1,4 @@
-class Gracl::Repo
+class Gracl::Config::Repo
     attr_accessor :config
     attr_accessor :name
     attr_accessor :description
@@ -21,22 +21,22 @@ class Gracl::Repo
     end
 
     def readers(readers)
-        self.acls << Gracl::Permission::Read.new(readers)
+        self.acls << Gracl::Config::Permission::Read.new(readers)
     end
 
     def writers(writers)
-        self.acls << Gracl::Permission::Write.new(writers)
+        self.acls << Gracl::Config::Permission::Write.new(writers)
     end
 
     def allow_branch(args)
         args.each do |ref,who|
-            self.acls << Gracl::Permission::Branch.new(who, ref)
+            self.acls << Gracl::Config::Permission::Branch.new(who, ref)
         end
     end
 
     def allow_path(args)
         args.each do |path,who|
-            self.acls << Gracl::Permission::Path.new(who, path)
+            self.acls << Gracl::Config::Permission::Path.new(who, path)
         end
     end
 end

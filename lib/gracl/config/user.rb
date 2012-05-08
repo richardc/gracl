@@ -1,4 +1,4 @@
-class Gracl::User
+class Gracl::Config::User
     attr_accessor :config
     attr_accessor :name
     attr_accessor :keyfile
