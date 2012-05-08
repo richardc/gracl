@@ -11,14 +11,13 @@ class Gracl::Command::Install < Gracl::Command
         if File.directory? gracl.admin_repo
             raise "Already created admin repo, bailing"
         end
-        repo = Grit::Repo.init(gracl.admin_repo)
+        repo = Grit::Repo.init_bare(gracl.admin_repo)
         index = repo.index
         index.add("gracl.conf", initial_config)
         index.add("keydir/admin/admin.pub", IO.read(admin))
         index.commit("Initial creation of gracl-admin")
-        Dir.chdir(admin_repo) do
-            repo.git.reset({:hard => true}, "HEAD")
-        end
+
+        system('git', 'clone', gracl.admin_repo, gracl.admin_checkout)
     end
 
     def initial_config

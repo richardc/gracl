@@ -27,14 +27,16 @@ require 'gracl/command'
 class Gracl
     attr_accessor :repositories
     attr_accessor :admin_repo
+    attr_accessor :admin_checkout
     def initialize
-        self.repositories = File.expand_path("~/repositories")
-        self.admin_repo = "#{self.repositories}/gracl-admin.git"
+        self.repositories   = File.expand_path("~/repositories")
+        self.admin_repo     = "#{self.repositories}/gracl-admin.git"
+        self.admin_checkout = File.expand_path("~/.gracl")
     end
 
     def config
         return @config if @config
-        @config = Gracl::Config.new(admin_repo)
+        @config = Gracl::Config.new(admin_checkout)
     end
 
     def install_ssh_config

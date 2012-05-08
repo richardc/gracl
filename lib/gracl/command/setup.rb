@@ -1,7 +1,7 @@
 class Gracl::Command::Setup < Gracl::Command
     def execute
         gracl = Gracl.new
-        config = Gracl::Config.new(gracl.admin_repo)
+        config = gracl.config
         puts config.to_yaml if verbose?
         if !config.validate
             raise "config fails to validate, not asserting"
