@@ -31,7 +31,9 @@ class Gracl::Command::Shell < Gracl::Command
     end
 
     def git_commands
-        [ 'git-receive-pack' ]
+        [ 'git-receive-pack', # push
+          'git-upload-pack',  # pull
+        ]
     end
 
     def deny(*message)
