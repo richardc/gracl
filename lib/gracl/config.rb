@@ -20,7 +20,7 @@ class Gracl::Config
 
     def load_users
         Dir["keydir/**/*.pub"].each do |keyfile|
-            users << Gracl::User.new_from_file( File.expand_path(keyfile) )
+            users << Gracl::User.new_from_file( keyfile )
         end
     end
 
