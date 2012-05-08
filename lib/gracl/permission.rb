@@ -6,5 +6,6 @@ class Gracl::Permission
     end
 
     def describe
+        inspect
     end
 end

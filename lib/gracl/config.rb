@@ -51,4 +51,19 @@ class Gracl::Config
     def repo(name)
         repos.find { |r| r.name == name }
     end
+
+    def permissions_for(user)
+        groups = user(user).groups.map { |g| "@#{g}"}
+        perms = {}
+        repos.each do |repo|
+            rperms = []
+            rperms << repo.acls.select { |acl| acl.who.to_a.include? user }
+            groups.each do |group|
+                rperms << repo.acls.select { |acl| acl.who.to_a.include? group }
+            end
+            rperms.flatten!
+            perms[repo.name] = rperms if rperms.size > 0
+        end
+        perms
+    end
 end
