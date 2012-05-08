@@ -4,7 +4,7 @@ class Gracl::Command::Shell < Gracl::Command
     option "--user", "USER", "The user to act as"
 
     def execute
-        ssh_command = ENV['SSH_ORIGINAL_COMMAND']
+        ssh_command = ENV['SSH_ORIGINAL_COMMAND'] || ''
         cmd = Shellwords::shellwords(ssh_command)
 
         say "Hello #{user}, you want to: #{cmd.inspect}"
