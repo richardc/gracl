@@ -5,4 +5,8 @@ class Gracl::Permission::Path < Gracl::Permission
         super(who)
         self.path = path
     end
+
+    def describe
+        "allow_path #{path.inspect} => #{who.inspect}"
+    end
 end

@@ -5,4 +5,8 @@ class Gracl::Permission::Branch < Gracl::Permission
         super(who)
         self.branch = branch
     end
+
+    def describe
+        "allow_branch #{branch.inspect} => #{who.inspect}"
+    end
 end
