@@ -42,7 +42,6 @@ class Gracl::Command::Shell < Gracl::Command
     end
 
     def check_allowed(username, command, repository)
-        say config.to_yaml
         repo = config.repo(repository) or
             deny "Repository #{repository} unconfigured"
         user = config.user(username) or
