@@ -21,6 +21,8 @@ require 'gracl/command/dump'
 require 'gracl/command/shell'
 require 'gracl/command/setup'
 require 'gracl/command/install'
+require 'gracl/command/adminpostupdatehook'
+require 'gracl/command/updatehook'
 require 'gracl/command'
 
 
@@ -39,9 +41,11 @@ class Gracl
         @config = Gracl::Config.new(admin_checkout)
     end
 
-    def install_ssh_config
+    def binary
         binary = Pathname.new($0).realpath
+    end
 
+    def install_ssh_config
         if !File.directory?(File.expand_path("~/.ssh"))
             Dir.mkdir(File.expand_path("~/.ssh"), 0755)
         end
@@ -55,4 +59,20 @@ class Gracl
             end
         end
     end
+
+    def install_hooks
+        config.repos.each do |repo|
+            path = "#{repositories}/#{repo.name}.git"
+            next unless File.directory? path
+            Dir.chdir path do
+                if repo.name == 'gracl-admin'
+                    hook = File.open("hooks/post-update", "w", 0755)
+                    hook.puts "#!/bin/sh\n#{binary} admin-post-update-hook\n"
+                end
+                hook = File.open("hooks/update", "w", 0755)
+                hook.puts "#!/bin/sh\n#{binary} update-hook\n"
+             end
+        end
+    end
+
 end

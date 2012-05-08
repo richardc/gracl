@@ -6,6 +6,7 @@ class Gracl::Command::Setup < Gracl::Command
         if !config.validate
             raise "config fails to validate, not asserting"
         end
+        gracl.install_hooks
         gracl.install_ssh_config
     end
 end

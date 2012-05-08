@@ -5,6 +5,7 @@ class Gracl::Command::Install < Gracl::Command
         self.gracl = Gracl.new
         create_admin_repository
         gracl.install_ssh_config
+        gracl.install_hooks
     end
 
     def create_admin_repository
