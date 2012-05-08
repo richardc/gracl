@@ -1,8 +1,8 @@
 class Gracl::User
+    attr_accessor :config
     attr_accessor :name
     attr_accessor :keyfile
     attr_accessor :groups
-    attr_accessor :config
 
     def initialize(name, keyfile)
         self.config = Gracl::Config.current

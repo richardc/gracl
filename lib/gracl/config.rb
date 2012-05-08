@@ -1,13 +1,14 @@
 class Gracl::Config
+    attr_accessor :directory
     attr_accessor :users
     attr_accessor :groups
     attr_accessor :repos
-    attr_accessor :directory
+
     def initialize(directory = ".")
         self.directory = directory
-        self.repos = []
         self.users = []
         self.groups = []
+        self.repos = []
 
         # used in Gracl::Config.setup
         @@current = self
