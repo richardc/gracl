@@ -1,8 +1,6 @@
 class Gracl::Command::Install < Gracl::Command
     parameter "ADMIN", "public keyfile of the initial administrator"
-    attr_accessor :gracl
     def execute
-        self.gracl = Gracl.new
         create_admin_repository
         gracl.install_ssh_config
         gracl.install_hooks

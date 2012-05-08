@@ -1,6 +1,5 @@
 class Gracl::Command::Setup < Gracl::Command
     def execute
-        gracl = Gracl.new
         config = gracl.config
         puts config.to_yaml if verbose?
         if !config.validate

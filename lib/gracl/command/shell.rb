@@ -4,7 +4,6 @@ class Gracl::Command::Shell < Gracl::Command
     option "--user", "USER", "The user to act as"
 
     def execute
-        gracl = Gracl.new
         ssh_command = ENV['SSH_ORIGINAL_COMMAND'] || ''
         cmd = Shellwords::shellwords(ssh_command)
 
@@ -33,11 +32,6 @@ class Gracl::Command::Shell < Gracl::Command
         end
     end
 
-    def config
-        return @config if @config
-        @config = Gracl::Config.new(File.expand_path("~/.gracl"))
-    end
-
     def say(*message)
         $stderr.print message, "\r\n"
     end
@@ -54,9 +48,9 @@ class Gracl::Command::Shell < Gracl::Command
     end
 
     def check_allowed(username, command, repository)
-        repo = config.repo(repository) or
+        repo = gracl.config.repo(repository) or
             deny "Repository #{repository} unconfigured"
-        user = config.user(username) or
+        user = gracl.config.user(username) or
             deny "User #{username} unconfigured"
         user.allowed(command, repo) or
             deny "User not allowed to do that"

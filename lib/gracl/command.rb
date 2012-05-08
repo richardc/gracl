@@ -2,6 +2,12 @@ class Gracl::Command < Clamp::Command
     option ["-v", "--verbose"], :flag, "be verbose" do
         Grit.debug = true
     end
+
+    def gracl
+        return @gracl if @gracl
+        @gracl = Gracl.new
+    end
+
     subcommand  "shell",
                 "The shell invoked from SSH",
                 Gracl::Command::Shell
