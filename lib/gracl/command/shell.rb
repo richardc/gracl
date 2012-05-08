@@ -28,7 +28,7 @@ class Gracl::Command::Shell < Gracl::Command
     end
 
     def say(*message)
-        $stderr.print message, "\n"
+        $stderr.print message, "\r\n"
     end
 
     def git_commands
