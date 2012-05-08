@@ -18,7 +18,10 @@ class Gracl::Command::Install < Gracl::Command
         index.add("keydir/admin/admin.pub", IO.read(admin))
         index.commit("Initial creation of gracl-admin")
 
-        system('git', 'clone', gracl.admin_repo, gracl.admin_checkout)
+        Dir.mkdir(gracl.admin_checkout)
+        ENV["GIT_WORK_TREE"] = gracl.admin_checkout
+        system('git', '--git-dir', gracl.admin_repo, 'checkout', '-f', '--quiet', 'master')
+        ENV["GIT_WORK_TREE"] = ""
     end
 
     def initial_config
