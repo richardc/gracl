@@ -14,13 +14,17 @@ class Gracl::Config
         end
     end
 
+    def self.current
+        @@current
+    end
+
     def self.setup(&block)
-        @@current.instance_eval &block
+        self.current.instance_eval &block
     end
 
     def load_users
         Dir["keydir/**/*.pub"].each do |keyfile|
-            users << Gracl::User.new_from_file( keyfile )
+            users << Gracl::User.new_from_file(keyfile)
         end
     end
 
