@@ -1,9 +1,10 @@
 class Gracl::Permission
-    attr_accessor :what
     attr_accessor :who
-    
-    def initialize(what = :write, *who)
-        self.what = what
+
+    def initialize(who)
         self.who  = who
+    end
+
+    def describe
     end
 end

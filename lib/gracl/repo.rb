@@ -20,19 +20,23 @@ class Gracl::Repo
         self.section = section
     end
 
-    def readers(*readers)
-        self.acls << Gracl::Permission.new(:read, readers)
+    def readers(readers)
+        self.acls << Gracl::Permission::Read.new(readers)
     end
 
-    def writers(*writers)
-        self.acls << Gracl::Permission.new(:write, writers)
+    def writers(writers)
+        self.acls << Gracl::Permission::Write.new(writers)
     end
 
-    def allow_branch(refspec, *who)
-        self.acls << Gracl::Permission.new(:ref, refspec, who)
+    def allow_branch(args)
+        args.each do |ref,who|
+            self.acls << Gracl::Permission::Branch.new(who, ref)
+        end
     end
 
-    def allow_path(pathspec, *who)
-        self.acls << Gracl::Permission.new(:path, pathspec, who)
+    def allow_path(args)
+        args.each do |path,who|
+            self.acls << Gracl::Permission::Path.new(who, path)
+        end
     end
 end
