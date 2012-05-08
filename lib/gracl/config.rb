@@ -53,7 +53,7 @@ class Gracl::Config
     end
 
     def permissions_for(user)
-        groups = user(user).groups.map { |g| "@#{g}"}
+        groups = user(user).groups.map { |g| "@#{g}"}.uniq
         perms = {}
         repos.each do |repo|
             rperms = []
