@@ -5,11 +5,12 @@ class Gracl::Group
     def initialize(name, &block)
         self.config = Gracl::Config.current
         self.name = name
-        @members = []
         self.instance_eval(&block)
     end
 
-    def members
-        @members
+    def members(*members)
+        members.each do |member|
+            config.user(member).groups << name
+        end
     end
 end
