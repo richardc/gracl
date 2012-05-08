@@ -15,8 +15,9 @@ class Gracl::Command::Shell < Gracl::Command
 
             say "Sure, why not"
             Dir.chdir(Gracl.new.repositories)
-            ### XXX set $PATH or something
-            exec("/usr/local/bin/git", "shell", "-c", ssh_command)
+
+            ENV["PATH"] = "/bin:/usr/bin:/usr/local/bin"
+            exec("git", "shell", "-c", ssh_command)
             deny "Wasn't able to run git"
         end
     end
