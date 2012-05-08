@@ -1,5 +1,8 @@
 class Gracl::Config
-    attr_accessor :repos, :users, :groups, :directory, :repo_root
+    attr_accessor :users
+    attr_accessor :groups
+    attr_accessor :repos
+    attr_accessor :directory
     def initialize(directory = ".")
         self.directory = directory
         self.repos = []
