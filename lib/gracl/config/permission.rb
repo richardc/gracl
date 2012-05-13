@@ -9,6 +9,10 @@ class Gracl::Config::Permission
         false
     end
 
+    def allow?(repo, ref, oldsha, newsha)
+        false
+    end
+
     def describe
         inspect
     end

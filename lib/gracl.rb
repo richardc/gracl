@@ -76,7 +76,7 @@ class Gracl
                     hook.puts "#!/bin/sh\n#{binary} admin-post-update-hook\n"
                 end
                 hook = File.open("hooks/update", "w", 0755)
-                hook.puts "#!/bin/sh\n#{binary} update-hook\n"
+                hook.puts "#!/bin/sh\n#{binary} update-hook $*\n"
              end
         end
     end
