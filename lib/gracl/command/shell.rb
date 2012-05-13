@@ -9,6 +9,7 @@ class Gracl::Command::Shell < Gracl::Command
 
         say "Hello #{user}, you want to: #{cmd.inspect}"
         (command, repo) = cmd
+        repo.gsub!(/\.git$/) # some users refer to foo.git, some to foo
         if git_commands.include?(command)
             check_allowed(user, command, repo)
 
