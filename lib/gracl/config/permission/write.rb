@@ -3,6 +3,10 @@ class Gracl::Config::Permission::Write < Gracl::Config::Permission
         true
     end
 
+    def allow?(repo, ref, oldsha, newsha)
+        true
+    end
+
     def describe
         "writers #{who.inspect}"
     end
