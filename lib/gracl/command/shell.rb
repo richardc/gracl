@@ -15,6 +15,11 @@ class Gracl::Command::Shell < Gracl::Command
             Dir.chdir(gracl.repositories)
 
             ENV["PATH"] = "/bin:/usr/bin:/usr/local/bin"
+            if !File.directory?("#{repo}.git")
+                system('git', 'init', '--quiet', '--bare', "#{repo}.git")
+                gracl.install_hooks
+            end
+
             ENV["GRACL_USER"] = user
             ENV["GRACL_REPO"] = repo
             exec("git", "shell", "-c", ssh_command)
