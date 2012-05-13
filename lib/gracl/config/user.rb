@@ -16,8 +16,4 @@ class Gracl::Config::User
     def keys
         File.open(keyfile).lines
     end
-
-    def allowed(operation, repository)
-        true
-    end
 end

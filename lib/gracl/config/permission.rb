@@ -5,6 +5,10 @@ class Gracl::Config::Permission
         self.who  = who
     end
 
+    def implies_write?
+        false
+    end
+
     def describe
         inspect
     end

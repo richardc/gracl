@@ -6,6 +6,10 @@ class Gracl::Config::Permission::Branch < Gracl::Config::Permission
         self.branch = branch
     end
 
+    def implies_write?
+        true
+    end
+
     def describe
         "allow_branch #{branch.inspect} => #{who.inspect}"
     end

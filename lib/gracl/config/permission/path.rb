@@ -6,6 +6,10 @@ class Gracl::Config::Permission::Path < Gracl::Config::Permission
         self.path = path
     end
 
+    def implies_write?
+        true
+    end
+
     def describe
         "allow_path #{path.inspect} => #{who.inspect}"
     end

@@ -10,10 +10,8 @@ class Gracl::Command::Shell < Gracl::Command
         say "Hello #{user}, you want to: #{cmd.inspect}"
         (command, repo) = cmd
         if git_commands.include?(command)
-            say "Checking if that's OK"
             check_allowed(user, command, repo)
 
-            say "Sure, why not"
             Dir.chdir(gracl.repositories)
 
             ENV["PATH"] = "/bin:/usr/bin:/usr/local/bin"
@@ -36,10 +34,16 @@ class Gracl::Command::Shell < Gracl::Command
         $stderr.print message, "\r\n"
     end
 
+    def git_write_commands
+        [ 'git-receive-pack' ]
+    end
+
+    def git_read_commands
+        [ 'git-upload-pack', 'git-upload-archive' ]
+    end
+
     def git_commands
-        [ 'git-receive-pack', # push
-          'git-upload-pack',  # pull
-        ]
+        [ git_write_commands, git_read_commands ].flatten
     end
 
     def deny(*message)
@@ -52,7 +56,23 @@ class Gracl::Command::Shell < Gracl::Command
             deny "Repository #{repository} unconfigured"
         user = gracl.config.user(username) or
             deny "User #{username} unconfigured"
-        user.allowed(command, repo) or
-            deny "User not allowed to do that"
+
+        perms = gracl.config.permissions_for(username)
+        if !perms.include? repository
+            deny "User #{username} has no access to #{repository}"
+        end
+
+        if git_read_commands.include? command
+            return true # any permission implies_read (for now)
+        end
+
+        perms[repository].each do |permission|
+            if permission.implies_write?
+                # XXX log which permission allows access
+                return true
+            end
+        end
+
+        deny "User #{username} has no write permission to #{repository}"
     end
 end
