@@ -9,7 +9,7 @@ class Gracl::Config::Permission
         false
     end
 
-    def allow?(repo, ref, oldsha, newsha)
+    def allow?(ref, oldsha, newsha)
         false
     end
 

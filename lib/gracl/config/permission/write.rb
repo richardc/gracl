@@ -3,7 +3,7 @@ class Gracl::Config::Permission::Write < Gracl::Config::Permission
         true
     end
 
-    def allow?(repo, ref, oldsha, newsha)
+    def allow?(ref, oldsha, newsha)
         true
     end
 

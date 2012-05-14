@@ -10,7 +10,7 @@ class Gracl::Command::UpdateHook < Gracl::Command
 
         perms = gracl.config.permissions_for(user)[repo]
         perms.each do |permission|
-            if permission.allow? repo, ref, oldsha, newsha
+            if permission.allow? ref, oldsha, newsha
                 say "Allowed via #{permission.describe}"
                 exit 0
             end

@@ -10,7 +10,7 @@ class Gracl::Config::Permission::Path < Gracl::Config::Permission
         true
     end
 
-    def allow?(repo, ref, oldsha, newsha)
+    def allow?(ref, oldsha, newsha)
         empty_tree = '4b825dc642cb6eb9a060e54bf8d69288fbee4904'
         oldtree = oldsha == "0" * 40 ? empty_tree : oldsha
         newtree = newsha == "0" * 40 ? empty_tree : newsha
