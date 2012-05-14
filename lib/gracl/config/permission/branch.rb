@@ -11,7 +11,8 @@ class Gracl::Config::Permission::Branch < Gracl::Config::Permission
     end
 
     def allow?(repo, ref, oldsha, newsha)
-        ref =~ branch
+        head = ref.sub(/^refs\/heads\//, '')
+        head =~ branch
     end
 
     def describe
