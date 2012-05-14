@@ -43,8 +43,7 @@ class Gracl
     end
 
     def config
-        return @config if @config
-        @config = Gracl::Config.new(admin_checkout)
+        @config ||= Gracl::Config.new(admin_checkout)
     end
 
     def binary

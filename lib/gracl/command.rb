@@ -4,8 +4,7 @@ class Gracl::Command < Clamp::Command
     end
 
     def gracl
-        return @gracl if @gracl
-        @gracl = Gracl.new
+        @gracl ||= Gracl.new
     end
 
     subcommand  "shell",
