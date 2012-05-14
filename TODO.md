@@ -2,8 +2,6 @@ cgit/gitweb configuration generation
 
 validate configuration before checking out
 
-logging
-
 make a choice on how detailled the "Permission denied" messages need to be
 
 decide whether to keep Grit as a dep or just move to posix-spawn

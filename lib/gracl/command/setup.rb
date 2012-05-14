@@ -1,7 +1,8 @@
 class Gracl::Command::Setup < Gracl::Command
     def execute
+        logger.info { "starting admin-post-update-hook" }
+
         config = gracl.config
-        puts config.to_yaml if verbose?
         if !config.validate
             raise "config fails to validate, not asserting"
         end

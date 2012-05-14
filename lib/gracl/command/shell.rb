@@ -4,12 +4,14 @@ class Gracl::Command::Shell < Gracl::Command
     option "--user", "USER", "The user to act as"
 
     def execute
+        logger.info { "starting shell" }
         ssh_command = ENV['SSH_ORIGINAL_COMMAND'] || ''
         cmd = Shellwords::shellwords(ssh_command)
 
-        say "Hello #{user}, you want to: #{cmd.inspect}"
+        logger.info { "User #{user}, command #{cmd.inspect}" }
         (command, repo) = cmd
         repo.gsub!(/\.git$/) # some users refer to foo.git, some to foo
+
         if git_commands.include?(command)
             check_allowed(user, command, repo)
 
@@ -17,6 +19,7 @@ class Gracl::Command::Shell < Gracl::Command
 
             ENV["PATH"] = "/bin:/usr/bin:/usr/local/bin"
             if !File.directory?("#{repo}.git")
+                logger.info { "creating repository #{repo}" }
                 system('git', 'init', '--quiet', '--bare', "#{repo}.git")
                 gracl.install_hooks
             end
@@ -71,12 +74,14 @@ class Gracl::Command::Shell < Gracl::Command
         end
 
         if git_read_commands.include? command
-            return true # any permission implies_read (for now)
+            logger.debug { "allowed to read as we have a permission" }
+            return true
         end
 
         perms[repository].each do |permission|
+            logger.debug { "seeing if '#{permission.describe}' allows write" }
             if permission.implies_write?
-                # XXX log which permission allows access
+                logger.info { "write allowed via '#{permission.describe}'" }
                 return true
             end
         end

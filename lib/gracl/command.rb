@@ -7,6 +7,10 @@ class Gracl::Command < Clamp::Command
         @gracl ||= Gracl.new
     end
 
+    def logger
+        @logger ||= gracl.logger
+    end
+
     subcommand  "shell",
                 "The shell invoked from SSH",
                 Gracl::Command::Shell
