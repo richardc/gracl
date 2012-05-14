@@ -17,10 +17,9 @@ class Gracl::Command::Shell < Gracl::Command
 
             Dir.chdir(gracl.repositories)
 
-            ENV["PATH"] = "/bin:/usr/bin:/usr/local/bin"
             if !File.directory?("#{repo}.git")
                 logger.info { "creating repository #{repo}" }
-                system('git', 'init', '--quiet', '--bare', "#{repo}.git")
+                POSIX::Spawn::Child.new('git', 'init', '--quiet', '--bare', "#{repo}.git")
                 gracl.install_hooks
             end
 

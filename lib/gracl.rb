@@ -2,6 +2,7 @@ require 'rubygems'
 require 'clamp'
 require 'logger'
 require 'pathname'
+require 'posix-spawn'
 require 'yaml'
 
 # These will all be classes I use later, but there I want to just say

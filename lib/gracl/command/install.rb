@@ -15,7 +15,7 @@ class Gracl::Command::Install < Gracl::Command
             raise "Already created admin checkout, bailing"
         end
 
-        system('git', 'init', '--quiet', '--bare', gracl.admin_repo)
+        POSIX::Spawn::Child.new('git', 'init', '--quiet', '--bare', gracl.admin_repo)
         Dir.mkdir(gracl.admin_checkout)
 
         admin_key = IO.read(admin)
@@ -30,10 +30,15 @@ class Gracl::Command::Install < Gracl::Command
                 file.write(initial_config)
             end
 
-            ENV['GIT_DIR'] = gracl.admin_repo
-            ENV['GIT_WORK_TREE'] = "."
-            system('git', 'add', '.')
-            system('git', 'commit', '--quiet', '-m', "Initial creation of gracl-admin")
+            POSIX::Spawn::Child.new({
+                GIT_DIR => gracl.admin_repo,
+                GIT_WORK_TREE => "." },
+                'git', 'add', '.')
+
+            POSIX::Spawn::Child.new({
+                GIT_DIR => gracl.admin_repo,
+                GIT_WORK_TREE => "." },
+                'git', 'commit', '--quiet', '-m', "Initial creation of gracl-admin")
         end
         logger.info { 'created initial config' }
     end
