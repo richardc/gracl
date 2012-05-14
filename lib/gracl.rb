@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'clamp'
-require 'grit'
 require 'logger'
 require 'pathname'
 require 'yaml'

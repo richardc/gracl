@@ -10,16 +10,32 @@ class Gracl::Command::Install < Gracl::Command
         if File.directory? gracl.admin_repo
             raise "Already created admin repo, bailing"
         end
-        repo = Grit::Repo.init_bare(gracl.admin_repo)
-        index = repo.index
-        index.add("gracl.conf", initial_config)
-        index.add("keydir/admin/admin.pub", IO.read(admin))
-        index.commit("Initial creation of gracl-admin")
 
+        if File.directory? gracl.admin_checkout
+            raise "Already created admin checkout, bailing"
+        end
+
+        system('git', 'init', '--quiet', '--bare', gracl.admin_repo)
         Dir.mkdir(gracl.admin_checkout)
-        ENV["GIT_WORK_TREE"] = gracl.admin_checkout
-        system('git', '--git-dir', gracl.admin_repo, 'checkout', '-f', '--quiet', 'master')
-        ENV["GIT_WORK_TREE"] = ""
+
+        admin_key = IO.read(admin)
+        Dir.chdir(gracl.admin_checkout) do
+            Dir.mkdir('logs') # can't call logger till after here
+            Dir.mkdir('keydir')
+            Dir.mkdir('keydir/admin')
+            File.open('keydir/admin/admin.pub', "w") do |file|
+                file.write(admin_key)
+            end
+            File.open('gracl.conf', "w") do |file|
+                file.write(initial_config)
+            end
+
+            ENV['GIT_DIR'] = gracl.admin_repo
+            ENV['GIT_WORK_TREE'] = "."
+            system('git', 'add', '.')
+            system('git', 'commit', '--quiet', '-m', "Initial creation of gracl-admin")
+        end
+        logger.info { 'created initial config' }
     end
 
     def initial_config

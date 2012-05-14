@@ -1,7 +1,5 @@
 class Gracl::Command < Clamp::Command
-    option ["-v", "--verbose"], :flag, "be verbose" do
-        Grit.debug = true
-    end
+    option ["-v", "--verbose"], :flag, "be verbose"
 
     def gracl
         @gracl ||= Gracl.new
